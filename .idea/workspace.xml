@@ -20,6 +20,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b1482c72-adc5-4e18-a7de-555a3f212470" />
+        <option name="url" value="git@github.com:kevinh2744/Snake.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectId" id="21pA4vmuXxPa3eyGDBHAxnDGVAK" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
