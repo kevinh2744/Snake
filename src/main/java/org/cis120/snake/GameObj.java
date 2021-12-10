@@ -24,6 +24,7 @@ public abstract class GameObj {
      * position should always be within bounds:
      * 0 <= px <= maxX 0 <= py <= maxY
      */
+
     private int px;
     private int py;
 
@@ -89,6 +90,7 @@ public abstract class GameObj {
         return this.height;
     }
 
+
     /**************************************************************************
      * SETTERS
      **************************************************************************/
@@ -146,10 +148,7 @@ public abstract class GameObj {
      * @return Whether this object intersects the other object.
      */
     public boolean intersects(GameObj that) {
-        return (this.px + this.width >= that.px
-                && this.py + this.height >= that.py
-                && that.px + that.width >= this.px
-                && that.py + that.height >= this.py);
+        return (this.px == that.getPx() && this.py == that.getPy());
     }
 
     /**

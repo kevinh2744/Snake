@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import java.util.Random;
+
 /**
  * GameCourt
  *
@@ -24,23 +26,28 @@ import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 public class GameCourt extends JPanel {
 
+    public static Direction currentDir;
+    public static Grid grid;
+    private Cell[][] gridArr;
+
     // the state of the game logic
-    private Square square; // the Black Square, keyboard control
+    private Snake snake; // the Black Square, keyboard control
     private Circle snitch; // the Golden Snitch, bounces
-    private Poison poison; // the Poison Mushroom, doesn't move
 
     private boolean playing = false; // whether the game is running
     private JLabel status; // Current status text, i.e. "Running..."
 
     // Game constants
-    public static final int COURT_WIDTH = 300;
-    public static final int COURT_HEIGHT = 300;
-    public static final int SQUARE_VELOCITY = 4;
+    public static final int COURT_WIDTH = 400;
+    public static final int COURT_HEIGHT = 400;
 
     // Update interval for timer, in milliseconds
-    public static final int INTERVAL = 35;
+    public static final int INTERVAL = 100;
 
     public GameCourt(JLabel status) {
+        grid = new Grid();
+        Cell[][] gridArr = grid.getGrid();
+
         // creates border around the court area, JComponent method
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -65,20 +72,15 @@ public class GameCourt extends JPanel {
         // method below actually moves the square.)
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    square.setVx(-SQUARE_VELOCITY);
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    square.setVx(SQUARE_VELOCITY);
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    square.setVy(SQUARE_VELOCITY);
-                } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    square.setVy(-SQUARE_VELOCITY);
+                if (e.getKeyCode() == KeyEvent.VK_LEFT && currentDir != Direction.RIGHT) {
+                    currentDir = Direction.LEFT;
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && currentDir != Direction.LEFT) {
+                    currentDir = Direction.RIGHT;
+                } else if (e.getKeyCode() == KeyEvent.VK_DOWN && currentDir != Direction.UP) {
+                    currentDir = Direction.DOWN;
+                } else if (e.getKeyCode() == KeyEvent.VK_UP && currentDir != Direction.DOWN) {
+                    currentDir = Direction.UP;
                 }
-            }
-
-            public void keyReleased(KeyEvent e) {
-                square.setVx(0);
-                square.setVy(0);
             }
         });
 
@@ -89,9 +91,9 @@ public class GameCourt extends JPanel {
      * (Re-)set the game to its initial state.
      */
     public void reset() {
-        square = new Square(COURT_WIDTH, COURT_HEIGHT, Color.BLACK);
-        poison = new Poison(COURT_WIDTH, COURT_HEIGHT);
-        snitch = new Circle(COURT_WIDTH, COURT_HEIGHT, Color.YELLOW);
+        snake = new Snake();
+        currentDir = Direction.RIGHT;
+        snitch = new Circle(COURT_WIDTH, COURT_HEIGHT, Color.RED);
 
         playing = true;
         status.setText("Running...");
@@ -107,34 +109,69 @@ public class GameCourt extends JPanel {
     void tick() {
         if (playing) {
             // advance the square and snitch in their current direction.
-            square.move();
-            snitch.move();
-
-            // make the snitch bounce off walls...
-            snitch.bounce(snitch.hitWall());
-            // ...and the mushroom
-            snitch.bounce(snitch.hitObj(poison));
+            snake.move(currentDir);
 
             // check for the game end conditions
-            if (square.intersects(poison)) {
-                playing = false;
-                status.setText("You lose!");
-            } else if (square.intersects(snitch)) {
-                playing = false;
-                status.setText("You win!");
+            if (snake.getHead().intersects(snitch)) {
+                snake.grow();
             }
+            checkLoss();
 
             // update the display
             repaint();
         }
     }
 
+    public void checkLoss() {
+        boolean lost = false;
+
+        if (snake.isDead()) {
+            lost = true;
+            playing = false;
+            status.setText("You lose!");
+        }
+
+        if (snake.getHead().getPx() < 0) {
+            lost = true;
+            playing = false;
+            status.setText("You lose!");
+        } else if (snake.getHead().getPx() > Grid.rowCount) {
+            lost = true;
+            playing = false;
+            status.setText("You lose!");
+        } else if (snake.getHead().getPy() < 0) {
+            lost = true;
+            playing = false;
+            status.setText("You lose!");
+        } else if (snake.getHead().getPy() > Grid.colCount) {
+            lost = true;
+            playing = false;
+            status.setText("You lose!");
+        }
+
+        for (int i = 1; i < snake.getSnakeList().size(); i++) {
+            if (snake.getHead().intersects(snake.getSnakeList().get(i))) {
+                lost = true;
+                playing = false;
+                status.setText("You lose!");
+            }
+        }
+    }
+
+    public void spawnNormalApple() {
+        for (SnakePart snakePart : snake.getSnakeList()) {
+            gridArr[snakePart.getPy()][snakePart.getPx()] = Cell.SNAKE_PART;
+        }
+
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        square.draw(g);
-        poison.draw(g);
+        snake.draw(g);
         snitch.draw(g);
+        Grid.draw(g);
+        setBackground(Color.BLACK);
     }
 
     @Override

@@ -15,10 +15,10 @@ import java.awt.*;
  */
 public class Circle extends GameObj {
     public static final int SIZE = 20;
-    public static final int INIT_POS_X = 170;
-    public static final int INIT_POS_Y = 170;
-    public static final int INIT_VEL_X = 2;
-    public static final int INIT_VEL_Y = 3;
+    public static final int INIT_POS_X = 5;
+    public static final int INIT_POS_Y = 5;
+    public static final int INIT_VEL_X = 0;
+    public static final int INIT_VEL_Y = 0;
 
     private Color color;
 
@@ -31,6 +31,6 @@ public class Circle extends GameObj {
     @Override
     public void draw(Graphics g) {
         g.setColor(this.color);
-        g.fillOval(this.getPx(), this.getPy(), this.getWidth(), this.getHeight());
+        g.fillOval(this.getPx() * SIZE, this.getPy() * SIZE, this.getWidth(), this.getHeight());
     }
 }

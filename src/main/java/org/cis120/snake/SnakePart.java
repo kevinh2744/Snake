@@ -13,29 +13,28 @@ import java.awt.*;
  * A basic game object starting in the upper left corner of the game court. It
  * is displayed as a square of a specified color.
  */
-public class Square extends GameObj {
+public class SnakePart extends GameObj {
     public static final int SIZE = 20;
-    public static final int INIT_POS_X = 0;
-    public static final int INIT_POS_Y = 0;
-    public static final int INIT_VEL_X = 0;
-    public static final int INIT_VEL_Y = 0;
-
-    private Color color;
+    private Direction dir;
 
     /**
      * Note that, because we don't need to do anything special when constructing
      * a Square, we simply use the superclass constructor called with the
      * correct parameters.
      */
-    public Square(int courtWidth, int courtHeight, Color color) {
-        super(INIT_VEL_X, INIT_VEL_Y, INIT_POS_X, INIT_POS_Y, SIZE, SIZE, courtWidth, courtHeight);
+    public SnakePart(int px, int py, Direction dir) {
+        super(0, 0, px, py, SIZE, SIZE,
+                GameCourt.COURT_WIDTH, GameCourt.COURT_HEIGHT);
+        this.dir = dir;
+    }
 
-        this.color = color;
+    public Direction getDir() {
+        return dir;
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(this.color);
-        g.fillRect(this.getPx(), this.getPy(), this.getWidth(), this.getHeight());
+        g.setColor(Color.GREEN);
+        g.fillRect(this.getPx() * SIZE, this.getPy() * SIZE, this.getWidth(), this.getHeight());
     }
 }
