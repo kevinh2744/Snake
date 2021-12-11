@@ -56,24 +56,26 @@ public class Snake {
     }
 
     public void grow() {
-        Direction lastDir = snakeList.getLast().getDir();
-        int x = snakeList.getLast().getPx();
-        int y = snakeList.getLast().getPy();
-        if (lastDir == Direction.UP) {
+        SnakePart tail = getTail();
+        Direction tailDir = tail.getDir();
+        int x = tail.getPx();
+        int y = tail.getPy();
+        if (tailDir == Direction.UP) {
             y++;
-        } else if (lastDir == Direction.DOWN) {
+        } else if (tailDir == Direction.DOWN) {
             y--;
-        } else if (lastDir == Direction.RIGHT) {
+        } else if (tailDir== Direction.RIGHT) {
             x--;
-        } else if (lastDir == Direction.LEFT) {
+        } else if (tailDir == Direction.LEFT) {
             x++;
         }
-        snakeList.addLast(new SnakePart(x, y, lastDir));
+        snakeList.addLast(new SnakePart(x, y, tailDir));
     }
 
     public void move(Direction dir) {
-        int x = snakeList.getFirst().getPx();
-        int y = snakeList.getFirst().getPy();
+        SnakePart head = getHead();
+        int x = head.getPx();
+        int y = head.getPy();
         if (dir == Direction.UP) {
             y--;
         } else if (dir == Direction.DOWN) {
@@ -87,20 +89,43 @@ public class Snake {
         snakeList.removeLast();
     }
 
+    //Reversing the directions and indices of the snakeParts
+    //Used for when the PowerApple is eaten, which allows for
+    //user to reverse the snake's direction.
     public void reverse() {
+        //First reverse all directions
         for (SnakePart snakePart : snakeList) {
             Direction dir = snakePart.getDir();
-            if (dir == Direction.UP) {
-                snakePart.setDir(Direction.DOWN);
-            } else if (dir == Direction.DOWN) {
-                snakePart.setDir(Direction.UP);
-            } else if (dir == Direction.RIGHT) {
-                snakePart.setDir(Direction.LEFT);
-            } else if (dir == Direction.LEFT) {
-                snakePart.setDir(Direction.RIGHT);
+            snakePart.setDir(oppositeDir(dir));
+        }
+
+        //Reverse all indices
+        Collections.reverse(snakeList);
+
+        //Adjusting directions at turns in the snake
+        for (int i = 0; i < snakeList.size() - 1; i++) {
+            SnakePart cur = snakeList.get(i);
+            Direction curDir = cur.getDir();
+            SnakePart next = snakeList.get(i + 1);
+            Direction nextDir = next.getDir();
+
+            if (curDir != nextDir) {
+                cur.setDir(nextDir);
             }
         }
-        Collections.reverse(snakeList);
+    }
+
+    //Helper function for reverse()
+    public Direction oppositeDir(Direction dir) {
+        if (dir == Direction.UP) {
+            return Direction.DOWN;
+        } else if (dir == Direction.DOWN) {
+            return Direction.UP;
+        } else if (dir == Direction.RIGHT) {
+            return Direction.LEFT;
+        } else {
+            return Direction.RIGHT;
+        }
     }
 
     public void draw(Graphics g) {

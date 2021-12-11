@@ -229,16 +229,11 @@ public class GameCourt extends JPanel {
         }
 
         //Collisions with wall
-        if (snake.getHead().getPx() < 0) {
-            playing = false;
-            status.setText("You lose!");
-        } else if (snake.getHead().getPx() >= Grid.ROW_COUNT) {
-            playing = false;
-            status.setText("You lose!");
-        } else if (snake.getHead().getPy() < 0) {
-            playing = false;
-            status.setText("You lose!");
-        } else if (snake.getHead().getPy() >= Grid.COL_COUNT) {
+        SnakePart head = snake.getHead();
+        if (head.getPx() < 0
+            || head.getPx() >= Grid.ROW_COUNT
+            || head.getPy() < 0
+            || head.getPy() >= Grid.COL_COUNT) {
             playing = false;
             status.setText("You lose!");
         }

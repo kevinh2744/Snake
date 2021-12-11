@@ -58,9 +58,38 @@ public class SnakeTests {
         assertEquals(Direction.LEFT, head.getDir());
         assertEquals(Direction.LEFT, snakeList.get(1).getDir());
         assertEquals(Direction.LEFT, snakeList.get(2).getDir());
-        assertEquals(Direction.LEFT, snakeList.get(3).getDir());
+        assertEquals(Direction.UP, snakeList.get(3).getDir());
         assertEquals(Direction.UP, tail.getDir());
+    }
 
+    @Test
+    public void reverseZigzagTest() {
+        snake.move(Direction.RIGHT);
+        snake.grow();
+        snake.move(Direction.DOWN);
+        snake.grow();
+        snake.move(Direction.RIGHT);
+        snake.grow();
+        snake.move(Direction.DOWN);
+        snake.grow();
+        snake.move(Direction.LEFT);
+        snake.grow();
+
+        snake.reverse();
+        SnakePart head = snake.getHead();
+        SnakePart tail = snake.getTail();
+        assertEquals(0, head.getPx());
+        assertEquals(0, head.getPy());
+        assertEquals(1, tail.getPx());
+        assertEquals(2, tail.getPy());
+
+        LinkedList<SnakePart> snakeList = snake.getSnakeList();
+        assertEquals(Direction.LEFT, head.getDir());
+        assertEquals(Direction.UP, snakeList.get(1).getDir());
+        assertEquals(Direction.LEFT, snakeList.get(2).getDir());
+        assertEquals(Direction.UP, snakeList.get(3).getDir());
+        assertEquals(Direction.RIGHT, snakeList.get(4).getDir());
+        assertEquals(Direction.RIGHT, tail.getDir());
     }
 
 }
