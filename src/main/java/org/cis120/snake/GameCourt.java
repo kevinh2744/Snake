@@ -36,8 +36,8 @@ public class GameCourt extends JPanel {
 
     // the state of the game logic
     private Snake snake; // the moving snake, keyboard control
-    private Apple apple;
-    private BadApple badApple;
+    private Apple apple; // apple can either be a normal or power apple
+    private BadApple badApple; //spawns in random unoccupied squares
 
     private int score;
     private static Direction currentDir;
@@ -54,7 +54,7 @@ public class GameCourt extends JPanel {
     public static final int COURT_HEIGHT = 400;
 
     // Update interval for timer, in milliseconds
-    public static final int INTERVAL = 150;
+    public static final int INTERVAL = 125;
 
     public GameCourt(JLabel status) {
 

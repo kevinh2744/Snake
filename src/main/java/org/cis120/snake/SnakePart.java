@@ -20,8 +20,7 @@ public class SnakePart extends GameObj {
     private Direction dir;
 
     public SnakePart(int px, int py, Direction dir) {
-        super(0, 0, px, py, SIZE, SIZE,
-                GameCourt.COURT_WIDTH, GameCourt.COURT_HEIGHT);
+        super(px, py, SIZE, SIZE);
         this.dir = dir;
     }
 

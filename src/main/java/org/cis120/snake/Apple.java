@@ -13,8 +13,7 @@ public abstract class Apple extends GameObj {
     private Color color;
 
     public Apple(int px, int py, Color color) {
-        super(0, 0, px, py, SnakePart.SIZE, SnakePart.SIZE,
-            GameCourt.COURT_WIDTH, GameCourt.COURT_HEIGHT);
+        super(px, py, SnakePart.SIZE, SnakePart.SIZE);
         this.color = color;
     }
 
