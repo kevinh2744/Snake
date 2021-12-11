@@ -4,13 +4,13 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
-public class Grid extends JPanel{
-    public static final int rowCount = GameCourt.COURT_WIDTH / SnakePart.SIZE;
-    public static final int colCount = GameCourt.COURT_HEIGHT / SnakePart.SIZE;
-    public static int[][] grid;
+public class Grid extends JPanel {
+    public static final int ROW_COUNT = GameCourt.COURT_WIDTH / SnakePart.SIZE;
+    public static final int COL_COUNT = GameCourt.COURT_HEIGHT / SnakePart.SIZE;
+    private static int[][] grid;
 
     public Grid() {
-        grid = new int[rowCount][colCount];
+        grid = new int[ROW_COUNT][COL_COUNT];
     }
 
     public int[][] getGrid() {

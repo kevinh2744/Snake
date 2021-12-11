@@ -14,7 +14,7 @@ public class SnakeTests {
     Snake snake = new Snake();
 
     @Test
-    public void GrowTest() {
+    public void growTest() {
         snake.move(Direction.RIGHT);
         snake.grow();
         snake.move(Direction.RIGHT);
@@ -26,7 +26,7 @@ public class SnakeTests {
     }
 
     @Test
-    public void MoveTest() {
+    public void moveTest() {
         snake.move(Direction.RIGHT);
         snake.move(Direction.RIGHT);
         snake.move(Direction.DOWN);
@@ -36,7 +36,7 @@ public class SnakeTests {
     }
 
     @Test
-    public void ReverseTest() {
+    public void reverseTest() {
         snake.move(Direction.RIGHT);
         snake.grow();
         snake.move(Direction.RIGHT);

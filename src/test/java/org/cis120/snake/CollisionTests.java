@@ -13,7 +13,7 @@ public class CollisionTests {
     Snake snake = new Snake();
 
     @Test
-    public void SnakeWithAppleTest() {
+    public void snakeWithAppleTest() {
         NormalApple normalApple = new NormalApple(3, 0);
         snake.move(Direction.RIGHT);
         snake.move(Direction.RIGHT);
@@ -26,7 +26,7 @@ public class CollisionTests {
     }
 
     @Test
-    public void SnakeWithSnakeTest() {
+    public void snakeWithSnakeTest() {
         snake.move(Direction.RIGHT);
         snake.move(Direction.RIGHT);
         snake.grow();
@@ -46,9 +46,9 @@ public class CollisionTests {
     }
 
     @Test
-    public void SnakeWithTopWallTest() {
+    public void snakeWithTopWallTest() {
         GameCourt court = new GameCourt(new JLabel("Running..."));
-        court.reset();
+        court.load();
         court.setDir(Direction.UP);
         assertTrue(court.getPlaying());
 
@@ -57,9 +57,9 @@ public class CollisionTests {
     }
 
     @Test
-    public void SnakeWithLeftWallTest() {
+    public void snakeWithLeftWallTest() {
         GameCourt court = new GameCourt(new JLabel("Running..."));
-        court.reset();
+        court.load();
         court.setDir(Direction.LEFT);
         assertTrue(court.getPlaying());
 
@@ -68,25 +68,25 @@ public class CollisionTests {
     }
 
     @Test
-    public void SnakeWithRightWallTest() {
+    public void snakeWithRightWallTest() {
         GameCourt court = new GameCourt(new JLabel("Running..."));
-        court.reset();
+        court.load();
         assertTrue(court.getPlaying());
 
-        for (int i = 0; i < Grid.colCount; i++) {
+        for (int i = 0; i < Grid.COL_COUNT; i++) {
             court.tick();
         }
         assertFalse(court.getPlaying());
     }
 
     @Test
-    public void SnakeWithBottomWallTest() {
+    public void snakeWithBottomWallTest() {
         GameCourt court = new GameCourt(new JLabel("Running..."));
-        court.reset();
+        court.load();
         court.setDir(Direction.DOWN);
         assertTrue(court.getPlaying());
 
-        for (int i = 0; i < Grid.rowCount; i++) {
+        for (int i = 0; i < Grid.ROW_COUNT; i++) {
             court.tick();
         }
         assertFalse(court.getPlaying());

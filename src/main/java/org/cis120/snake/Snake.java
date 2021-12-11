@@ -21,6 +21,11 @@ public class Snake {
         return snakeList.getFirst();
     }
 
+    public void setHead(int px, int py, Direction dir) {
+        snakeList.removeFirst();
+        snakeList.addFirst(new SnakePart(px, py, dir));
+    }
+
     public SnakePart getTail() {
         return snakeList.getLast();
     }
@@ -34,17 +39,22 @@ public class Snake {
         return ateBad;
     }
 
-    public void changeAteBad() {
-        ateBad = true;
+    public void changeAteBad(boolean bool) {
+        ateBad = bool;
     }
 
     public boolean atePower() {
         return atePower;
     }
 
-    public void changeAtePower() {
-        atePower = true;
+    public void changeAtePower(boolean bool) {
+        atePower = bool;
     }
+
+    public void addSnakePart(int px, int py, Direction dir) {
+        snakeList.add(new SnakePart(px, py, dir));
+    }
+
     public void grow() {
         Direction lastDir = snakeList.getLast().getDir();
         int x = snakeList.getLast().getPx();

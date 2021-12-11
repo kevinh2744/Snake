@@ -10,7 +10,7 @@ public class BadApple extends Apple {
 
     @Override
     public void effect(Snake snake) {
-        snake.changeAteBad();
+        snake.changeAteBad(true);
     }
 
     @Override
@@ -21,6 +21,7 @@ public class BadApple extends Apple {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.PINK);
-        g.fillOval(this.getPx() * SnakePart.SIZE, this.getPy() * SnakePart.SIZE, this.getWidth(), this.getHeight());
+        g.fillOval(this.getPx() * SnakePart.SIZE, this.getPy() * SnakePart.SIZE,
+            this.getWidth(), this.getHeight());
     }
 }

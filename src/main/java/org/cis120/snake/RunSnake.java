@@ -20,15 +20,22 @@ public class RunSnake implements Runnable {
     public void run() {
 
         JOptionPane.showMessageDialog(null,
-                " Welcome to my poorly made Snake game. Your objective is to eat apples, \n"
-                        + " which are represented by red dots. Each apple will increase the snake's \n"
-                        + " length by 1 and are worth 10 points.  Beware, pink apples are bad for \n"
-                        + " the snake's tummy and should be avoided all costs. You might encounter \n"
-                        + " some special apples later :^). If you collide with the wall or with \n"
-                        + " yourself, you will lose and give the snake a concussion. Try to survive \n"
-                        + " as long as you can. \n\n"
-                        + " Use your arrow keys to change the snake's direction. You cannot move in \n"
-                        + " the opposite direction (e.g. can't move left if you're going right)",
+                " Welcome to my poorly made Snake game. Your objective is  \n"
+                        + " to eat apples, which are represented by red dots. Each  \n"
+                        + " apple will increase the snake's length by 1 and \n"
+                        + " are worth 10 points. Beware, pink apples are bad for the  \n"
+                        + " snake's tummy and should be avoided all costs. You might \n"
+                        + " encounter a special blue apple later, which will give \n"
+                        + " you the power to reverse directions when you hit your spacebar :0 \n\n"
+                        + " If you collide with the wall or with your own body, \n"
+                        + " you will lose and give the snake a concussion (not cool). \n"
+                        + " Try to survive as long as you can. \n\n"
+                        + " Use your arrow keys to change the snake's direction. \n"
+                        + " You cannot move in the opposite direction (e.g. can't move \n"
+                        + " left if you're going right). You can reverse directions \n"
+                        + " by hitting the spacebar after you've eaten the special apple. \n"
+                        + " Save your game by pressing your 's' key, and load a saved game \n"
+                        + " by pressing the 'Load' button. Have fun!",
                 "Instructions", JOptionPane.INFORMATION_MESSAGE);
 
         // NOTE : recall that the 'final' keyword notes immutability even for
@@ -57,12 +64,21 @@ public class RunSnake implements Runnable {
         // define it as an anonymous inner class that is an instance of
         // ActionListener with its actionPerformed() method overridden. When the
         // button is pressed, actionPerformed() will be called.
+        final JButton load = new JButton("Load");
+        load.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                court.load();
+            }
+        });
+
         final JButton reset = new JButton("Reset");
         reset.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 court.reset();
             }
         });
+
+        control_panel.add(load);
         control_panel.add(reset);
 
         // Put the frame on the screen
@@ -71,6 +87,6 @@ public class RunSnake implements Runnable {
         frame.setVisible(true);
 
         // Start game
-        court.reset();
+        court.load();
     }
 }

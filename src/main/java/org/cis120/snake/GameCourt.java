@@ -15,6 +15,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import java.util.Random;
+import java.util.LinkedList;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,7 +40,7 @@ public class GameCourt extends JPanel {
     private BadApple badApple;
 
     private int score;
-    public static Direction currentDir;
+    private static Direction currentDir;
     private Timer timer;
 
     private Grid grid;
@@ -104,6 +106,12 @@ public class GameCourt extends JPanel {
                     } else if (dir == Direction.LEFT) {
                         currentDir = Direction.RIGHT;
                     }
+                } else if (e.getKeyCode() == KeyEvent.VK_S) {
+                    try {
+                        saveGame();
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }
         });
@@ -114,6 +122,45 @@ public class GameCourt extends JPanel {
     /**
      * (Re-)set the game to its initial state.
      */
+    public void load() {
+        snake = new Snake();
+        currentDir = Direction.RIGHT;
+        score = 0;
+
+        try {
+            ArrayList<ArrayList<String>> snakeParts = getSavedSnakeParts();
+            for (int i = 0; i < snakeParts.size(); i++) {
+                ArrayList<String> snakePart = snakeParts.get(i);
+                int partX = Integer.valueOf(snakePart.get(0));
+                int partY = Integer.valueOf(snakePart.get(1));
+                Direction partDir = stringToDir(snakePart.get(2));
+                if (i == 0) {
+                    snake.setHead(partX, partY, partDir);
+                } else {
+                    snake.addSnakePart(partX, partY, partDir);
+                }
+            }
+            currentDir = snake.getHead().getDir();
+            snake.changeAtePower(getSavedPower());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            score = getSavedScore();
+        } catch (IOException e) {
+            score = 0;
+        }
+
+        playing = true;
+        status.setText("Score: " + score);
+
+        spawnApples();
+
+        // Make sure that this component has the keyboard focus
+        requestFocusInWindow();
+    }
+
     public void reset() {
         snake = new Snake();
         currentDir = Direction.RIGHT;
@@ -122,10 +169,23 @@ public class GameCourt extends JPanel {
         playing = true;
         status.setText("Score: " + score);
 
-        spawnApple();
+        spawnApples();
 
         // Make sure that this component has the keyboard focus
         requestFocusInWindow();
+    }
+
+    public Direction stringToDir(String string) {
+        if (string.equals("UP")) {
+            return Direction.UP;
+        } else if (string.equals("DOWN")) {
+            return Direction.DOWN;
+        } else if (string.equals("RIGHT")) {
+            return Direction.RIGHT;
+        } else if (string.equals("LEFT")) {
+            return Direction.LEFT;
+        }
+        return Direction.RIGHT;
     }
 
     /**
@@ -140,11 +200,18 @@ public class GameCourt extends JPanel {
             // Checking for and dealing with collisions with apples
             if (snake.getHead().intersects(apple)) {
                 apple.effect(snake);
-                spawnApple();
+                spawnApples();
                 score += 10;
                 status.setText("Score: " + score);
                 status.repaint();
             }
+
+            if (badApple != null) {
+                if (snake.getHead().intersects(badApple)) {
+                    badApple.effect(snake);
+                }
+            }
+
             // check for the game end conditions
             checkLoss();
 
@@ -154,42 +221,39 @@ public class GameCourt extends JPanel {
     }
 
     public void checkLoss() {
-        boolean lost = false;
 
+        //Ate bad apple
         if (snake.ateBad()) {
-            lost = true;
             playing = false;
             status.setText("You lose!");
         }
 
+        //Collisions with wall
         if (snake.getHead().getPx() < 0) {
-            lost = true;
             playing = false;
             status.setText("You lose!");
-        } else if (snake.getHead().getPx() >= Grid.rowCount) {
-            lost = true;
+        } else if (snake.getHead().getPx() >= Grid.ROW_COUNT) {
             playing = false;
             status.setText("You lose!");
         } else if (snake.getHead().getPy() < 0) {
-            lost = true;
             playing = false;
             status.setText("You lose!");
-        } else if (snake.getHead().getPy() >= Grid.colCount) {
-            lost = true;
+        } else if (snake.getHead().getPy() >= Grid.COL_COUNT) {
             playing = false;
             status.setText("You lose!");
         }
 
+        //Collisions with snake body
         for (int i = 1; i < snake.getSnakeList().size(); i++) {
             if (snake.getHead().intersects(snake.getSnakeList().get(i))) {
-                lost = true;
                 playing = false;
                 status.setText("You lose!");
             }
         }
     }
 
-    public void spawnApple() {
+    public void spawnApples() {
+        //spawn either a NormalApple, or a PowerApple at 100 points
         int appleX;
         int appleY;
 
@@ -201,8 +265,8 @@ public class GameCourt extends JPanel {
 
         Random random = new Random();
         while (true) {
-            int randomRow = random.nextInt(Grid.rowCount);
-            int randomCol = random.nextInt(Grid.colCount);
+            int randomRow = random.nextInt(Grid.ROW_COUNT);
+            int randomCol = random.nextInt(Grid.COL_COUNT);
             if (gridArr[randomRow][randomCol] == 0) {
                 appleX = randomCol;
                 appleY = randomRow;
@@ -210,35 +274,106 @@ public class GameCourt extends JPanel {
                 break;
             }
         }
+
         if (score == 90) {
             apple = new PowerApple(appleX, appleY);
         } else {
             apple = new NormalApple(appleX, appleY);
         }
-    }
 
-    public void spawnBadApple() {
+        //spawn a BadApple, changes location every 50 points
         int badAppleX;
         int badAppleY;
 
-        grid = new Grid();
-        gridArr = grid.getGrid();
-        for (SnakePart snakePart : snake.getSnakeList()) {
-            gridArr[snakePart.getPy()][snakePart.getPx()] = 1;
+        if (score % 50 == 0) {
+            while (true) {
+                int randomRow = random.nextInt(Grid.ROW_COUNT);
+                int randomCol = random.nextInt(Grid.COL_COUNT);
+                if (gridArr[randomRow][randomCol] == 0) {
+                    badAppleX = randomCol;
+                    badAppleY = randomRow;
+                    gridArr[randomRow][randomCol] = 1;
+                    break;
+                }
+            }
+            badApple = new BadApple(badAppleX, badAppleY);
         }
+    }
 
-        Random random = new Random();
-        while (true) {
-            int randomRow = random.nextInt(Grid.rowCount);
-            int randomCol = random.nextInt(Grid.colCount);
-            if (gridArr[randomRow][randomCol] == 0) {
-                badAppleX = randomCol;
-                badAppleY = randomRow;
-                gridArr[randomRow][randomCol] = 1;
-                break;
+    public void saveGame() throws IOException {
+        File gameFile = new File("game_save.txt");
+        if (!gameFile.exists()) {
+            try {
+                gameFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        badApple = new BadApple(badAppleX, badAppleY);
+
+        FileWriter write = new FileWriter("game_save.txt", false);
+        BufferedWriter bw = new BufferedWriter(write);
+
+        bw.write(String.valueOf(score));
+        bw.newLine();
+
+        bw.write(String.valueOf(snake.atePower()));
+        bw.newLine();
+
+        LinkedList<SnakePart> snakeList = snake.getSnakeList();
+        for (SnakePart snakePart : snakeList) {
+            bw.write(snakePart.getPx() + "," 
+                    + snakePart.getPy() + "," 
+                    + snakePart.getDir().toString());
+            bw.newLine();
+        }
+        bw.close();
+    }
+
+    public ArrayList<ArrayList<String>> getSavedSnakeParts() throws IOException {
+        ArrayList<ArrayList<String>> snakeParts = new ArrayList<>();
+        try {
+            FileReader fr = new FileReader("game_save.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String nextLine;
+            br.readLine();
+            br.readLine();
+            while ((nextLine = br.readLine()) != null) {
+                ArrayList<String> snakePartInfo = new ArrayList<>();
+                for (String s : nextLine.split(",")) {
+                    snakePartInfo.add(s);
+                }
+                snakeParts.add(snakePartInfo);
+            }
+            br.close();
+            return snakeParts;
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public int getSavedScore() throws IOException {
+        try {
+            FileReader fr = new FileReader("game_save.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String nextLine = br.readLine();
+            br.close();
+            return Integer.valueOf(nextLine);
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+
+    public boolean getSavedPower() throws IOException {
+        try {
+            FileReader fr = new FileReader("game_save.txt");
+            BufferedReader br = new BufferedReader(fr);
+            br.readLine();
+            String nextLine = br.readLine();
+            br.close();
+            return Boolean.parseBoolean(nextLine);
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     //Testing methods
@@ -250,14 +385,13 @@ public class GameCourt extends JPanel {
         return playing;
     }
 
-    public void setPlaying(boolean bool) {
-        playing = bool;
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         apple.draw(g);
+        if (badApple != null) {
+            badApple.draw(g);
+        }
         snake.draw(g);
         Grid.draw(g);
         setBackground(Color.BLACK);

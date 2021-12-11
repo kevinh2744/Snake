@@ -5,49 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91c3e6de-6f62-4a08-b49c-ca4ac3b36eec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/PowerApple.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/cis120/snake/CollisionTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/cis120/snake/SnakeTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/Apple.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/BadApple.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameObj$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/NormalApple.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/PowerApple.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_save.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/checkstyle-cachefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/checkstyle-checker.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/checkstyle-result.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/RunSnake$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/checkstyle.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/checkstyle.rss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/images/rss.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Apple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Apple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/BadApple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/BadApple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Cell.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Circle.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/GameCourt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/GameCourt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Grid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/NormalApple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/NormalApple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/PowerApple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/PowerApple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/RunSnake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/RunSnake.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/SnakePart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/SnakePart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake2/GameFrame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake2/GamePanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake2/SnakeGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/cis120/mushroom/GameTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/cis120/tictactoe/GameTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Cell.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Circle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Fruit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/cis120/snake/CollisionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/cis120/snake/CollisionTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/cis120/snake/SnakeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/cis120/snake/SnakeTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Apple.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/Apple.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/BadApple.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/BadApple.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameObj.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameObj.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Grid.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/Grid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/NormalApple.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/NormalApple.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/PowerApple.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/PowerApple.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/RunSnake$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/RunSnake$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/RunSnake.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/RunSnake.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/Snake.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/SnakePart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/SnakePart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake2/GameFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake2/GamePanel$MyKeyAdapter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake2/GamePanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake2/SnakeGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/cis120/mushroom/GameTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/cis120/tictactoe/GameTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/org/cis120/snake/CollisionTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/org/cis120/snake/CollisionTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/org/cis120/snake/SnakeTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/org/cis120/snake/SnakeTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +82,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../hw07_most_recent/hw07_local_temp/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -196,7 +186,10 @@
       <updated>1638627467798</updated>
       <workItem from="1638627469033" duration="3769000" />
       <workItem from="1638891271226" duration="4347000" />
-      <workItem from="1638935280229" duration="69210000" />
+      <workItem from="1638935280229" duration="86365000" />
+      <workItem from="1639199778128" duration="749000" />
+      <workItem from="1639200547785" duration="33000" />
+      <workItem from="1639246191001" duration="2810000" />
     </task>
     <servers />
   </component>

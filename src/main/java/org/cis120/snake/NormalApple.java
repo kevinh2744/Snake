@@ -21,6 +21,7 @@ public class NormalApple extends Apple {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.RED);
-        g.fillOval(this.getPx() * SnakePart.SIZE, this.getPy() * SnakePart.SIZE, this.getWidth(), this.getHeight());
+        g.fillOval(this.getPx() * SnakePart.SIZE, this.getPy() * SnakePart.SIZE,
+            this.getWidth(), this.getHeight());
     }
 }
