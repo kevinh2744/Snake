@@ -10,18 +10,15 @@ package org.cis120.snake;
 import java.awt.*;
 
 /**
- * A basic game object starting in the upper left corner of the game court. It
- * is displayed as a square of a specified color.
+ * These snake parts will comprise the body of the snake
+ * through a LinkedList of SnakeParts.
+ * Each part is a green square GameObj that has
+ * a position in the grid and an associated direction.
  */
 public class SnakePart extends GameObj {
     public static final int SIZE = 25;
     private Direction dir;
 
-    /**
-     * Note that, because we don't need to do anything special when constructing
-     * a Square, we simply use the superclass constructor called with the
-     * correct parameters.
-     */
     public SnakePart(int px, int py, Direction dir) {
         super(0, 0, px, py, SIZE, SIZE,
                 GameCourt.COURT_WIDTH, GameCourt.COURT_HEIGHT);

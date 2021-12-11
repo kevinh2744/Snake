@@ -4,6 +4,14 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.Collections;
 
+/**
+ * Our snake will be a LinkedList of SnakeParts.
+ * It also has booleans ateBad and atePower to indicate
+ * whether the snake has eaten one of the special apples.
+ * Class contains methods for moving and growing the snake,
+ * reversing the directions and indices of its parts, and
+ * setters and getters.
+ */
 public class Snake {
     private LinkedList<SnakePart> snakeList;
     private boolean ateBad;
@@ -17,13 +25,16 @@ public class Snake {
         atePower = false;
     }
 
-    public SnakePart getHead() {
-        return snakeList.getFirst();
-    }
-
+    /**************************************************************************
+     * SETTERS AND GETTERS
+     **************************************************************************/
     public void setHead(int px, int py, Direction dir) {
         snakeList.removeFirst();
         snakeList.addFirst(new SnakePart(px, py, dir));
+    }
+
+    public SnakePart getHead() {
+        return snakeList.getFirst();
     }
 
     public SnakePart getTail() {
@@ -39,7 +50,7 @@ public class Snake {
         return ateBad;
     }
 
-    public void changeAteBad(boolean bool) {
+    public void setAteBad(boolean bool) {
         ateBad = bool;
     }
 
@@ -47,7 +58,7 @@ public class Snake {
         return atePower;
     }
 
-    public void changeAtePower(boolean bool) {
+    public void setAtePower(boolean bool) {
         atePower = bool;
     }
 
@@ -55,6 +66,16 @@ public class Snake {
         snakeList.add(new SnakePart(px, py, dir));
     }
 
+    /**************************************************************************
+     * MAIN METHODS
+     **************************************************************************/
+
+    /**
+     * When the snake grows when it eats an apple,
+     * a new SnakePart is added to the tail with coordinates
+     * and direction that depends on the direction of the
+     * previous tail.
+     */
     public void grow() {
         SnakePart tail = getTail();
         Direction tailDir = tail.getDir();
@@ -72,6 +93,13 @@ public class Snake {
         snakeList.addLast(new SnakePart(x, y, tailDir));
     }
 
+    /**
+     * Moving the snake involves adding a new head
+     * with coordinates and direction that depends
+     * on the current the snake is moving, and then
+     * removing the tail.
+     * @param dir
+     */
     public void move(Direction dir) {
         SnakePart head = getHead();
         int x = head.getPx();
@@ -89,20 +117,22 @@ public class Snake {
         snakeList.removeLast();
     }
 
-    //Reversing the directions and indices of the snakeParts
-    //Used for when the PowerApple is eaten, which allows for
-    //user to reverse the snake's direction.
+    /**
+     * Reversing the directions and indices of the snakeParts.
+     * Used for when the PowerApple is eaten, which allows the
+     * user to reverse the snake's direction.
+     */
     public void reverse() {
-        //First reverse all directions
+        //Reverse directions of all snake parts
         for (SnakePart snakePart : snakeList) {
             Direction dir = snakePart.getDir();
             snakePart.setDir(oppositeDir(dir));
         }
 
-        //Reverse all indices
+        //Reverse their indices
         Collections.reverse(snakeList);
 
-        //Adjusting directions at turns in the snake
+        //Adjust directions at turns in the snake
         for (int i = 0; i < snakeList.size() - 1; i++) {
             SnakePart cur = snakeList.get(i);
             Direction curDir = cur.getDir();
@@ -115,7 +145,9 @@ public class Snake {
         }
     }
 
-    //Helper function for reverse()
+    /**
+     * Helper function for reverse()
+     */
     public Direction oppositeDir(Direction dir) {
         if (dir == Direction.UP) {
             return Direction.DOWN;

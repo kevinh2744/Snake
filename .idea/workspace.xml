@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91c3e6de-6f62-4a08-b49c-ca4ac3b36eec" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_save.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/GameCourt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/GameCourt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/cis120/snake/SnakeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/cis120/snake/SnakeTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/GameCourt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/cis120/snake/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/cis120/snake/Snake.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/cis120/snake/SnakeTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/org/cis120/snake/SnakeTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/cis120/snake/SnakePart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/cis120/snake/SnakePart.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +158,7 @@
       <workItem from="1638935280229" duration="86365000" />
       <workItem from="1639199778128" duration="749000" />
       <workItem from="1639200547785" duration="33000" />
-      <workItem from="1639246191001" duration="8957000" />
+      <workItem from="1639246191001" duration="9535000" />
     </task>
     <servers />
   </component>

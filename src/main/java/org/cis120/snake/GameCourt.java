@@ -141,7 +141,7 @@ public class GameCourt extends JPanel {
                 }
             }
             currentDir = snake.getHead().getDir();
-            snake.changeAtePower(getSavedPower());
+            snake.setAtePower(getSavedPower());
         } catch (IOException e) {
             e.printStackTrace();
         }
