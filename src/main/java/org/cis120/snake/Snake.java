@@ -85,7 +85,7 @@ public class Snake {
             y++;
         } else if (tailDir == Direction.DOWN) {
             y--;
-        } else if (tailDir== Direction.RIGHT) {
+        } else if (tailDir == Direction.RIGHT) {
             x--;
         } else if (tailDir == Direction.LEFT) {
             x++;

@@ -5,9 +5,12 @@ import java.awt.*;
 import javax.swing.JPanel;
 
 /**
- * Establishes the grid system in the form of a 2D array
+ * Establishes the grid system in the form of an integer 2D array
  * that the game uses to keep track of which square
  * are occupied and which are empty (useful for spawning apples).
+ * An integer 2D array was chosen since empty square can be represented
+ * by the value 0, and occupied squares can be represented by 1. All squares
+ * are empty by default when the array is initialized.
  */
 public class Grid extends JPanel {
     public static final int ROW_COUNT = GameCourt.COURT_WIDTH / SnakePart.SIZE;

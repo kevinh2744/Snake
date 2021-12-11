@@ -82,7 +82,7 @@ public class GameCourt extends JPanel {
         // method below actually moves the square.)
 
         // Hitting the spacebar after the snake eats the power apple reverses
-        // the snake's direction
+        // the snake's direction. Hitting 's' will save the current game.
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT && currentDir != Direction.RIGHT) {
@@ -120,7 +120,7 @@ public class GameCourt extends JPanel {
     }
 
     /**
-     * (Re-)set the game to its initial state.
+     * Loading a saved game state
      */
     public void load() {
         snake = new Snake();
@@ -161,6 +161,27 @@ public class GameCourt extends JPanel {
         requestFocusInWindow();
     }
 
+    /**
+     * Helper function for load
+     * @param string
+     * @return
+     */
+    public Direction stringToDir(String string) {
+        if (string.equals("UP")) {
+            return Direction.UP;
+        } else if (string.equals("DOWN")) {
+            return Direction.DOWN;
+        } else if (string.equals("RIGHT")) {
+            return Direction.RIGHT;
+        } else if (string.equals("LEFT")) {
+            return Direction.LEFT;
+        }
+        return Direction.RIGHT;
+    }
+
+    /**
+     * resetting the game to the initial state
+     */
     public void reset() {
         snake = new Snake();
         currentDir = Direction.RIGHT;
@@ -175,18 +196,6 @@ public class GameCourt extends JPanel {
         requestFocusInWindow();
     }
 
-    public Direction stringToDir(String string) {
-        if (string.equals("UP")) {
-            return Direction.UP;
-        } else if (string.equals("DOWN")) {
-            return Direction.DOWN;
-        } else if (string.equals("RIGHT")) {
-            return Direction.RIGHT;
-        } else if (string.equals("LEFT")) {
-            return Direction.LEFT;
-        }
-        return Direction.RIGHT;
-    }
 
     /**
      * This method is called every time the timer defined in the constructor
@@ -220,6 +229,9 @@ public class GameCourt extends JPanel {
         }
     }
 
+    /**
+     * Checks losing conditions
+     */
     public void checkLoss() {
 
         //Ate bad apple
@@ -247,6 +259,11 @@ public class GameCourt extends JPanel {
         }
     }
 
+    /**
+     * Spawns apples in unoccupied squares by initializing
+     * a grid (2D integer array). Empty and occupied squares
+     *  are represented by 0 and 1, respectively.
+     */
     public void spawnApples() {
         //spawn either a NormalApple, or a PowerApple at 100 points
         int appleX;
@@ -295,6 +312,14 @@ public class GameCourt extends JPanel {
         }
     }
 
+    /**
+     * Saves the current game state to a text file. Called when
+     * the key 's' is pressed. The score and whether the snake has
+     * eaten the power apple are stored on the first two lines, and then
+     * the snake parts are stored in the following lines in the following format:
+     * x coordinate, y coordinate, direction
+     * @throws IOException
+     */
     public void saveGame() throws IOException {
         File gameFile = new File("game_save.txt");
         if (!gameFile.exists()) {
@@ -324,6 +349,14 @@ public class GameCourt extends JPanel {
         bw.close();
     }
 
+    /**
+     * Gets the saved snake parts as an array list of String array lists.
+     * The outer array is a list of all the save snake parts.
+     * The inner String array lists represent a specific snake part as an
+     * x coordinate, y coordinate, and direction
+     * @return
+     * @throws IOException
+     */
     public ArrayList<ArrayList<String>> getSavedSnakeParts() throws IOException {
         ArrayList<ArrayList<String>> snakeParts = new ArrayList<>();
         try {
@@ -346,6 +379,11 @@ public class GameCourt extends JPanel {
         }
     }
 
+    /**
+     * Gets the save score as an integer.
+     * @return
+     * @throws IOException
+     */
     public int getSavedScore() throws IOException {
         try {
             FileReader fr = new FileReader("game_save.txt");
@@ -358,6 +396,11 @@ public class GameCourt extends JPanel {
         }
     }
 
+    /**
+     * Gets whether the snake as eaten the PowerApple in the saved game.
+     * @return
+     * @throws IOException
+     */
     public boolean getSavedPower() throws IOException {
         try {
             FileReader fr = new FileReader("game_save.txt");
@@ -371,7 +414,9 @@ public class GameCourt extends JPanel {
         }
     }
 
-    //Testing methods
+    /**************************************************************************
+     * TESTING METHODS
+     **************************************************************************/
     public void setDir(Direction dir) {
         currentDir = dir;
     }
