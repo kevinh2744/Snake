@@ -2,15 +2,16 @@ package org.cis120.snake;
 
 import java.awt.*;
 
-public class NormalApple extends Apple {
+public class PowerApple extends Apple {
 
-    public NormalApple(int px, int py) {
+    public PowerApple(int px, int py) {
         super(px, py);
     }
 
     @Override
     public void effect(Snake snake) {
         snake.grow();
+        snake.changeAtePower();
     }
 
     @Override
@@ -20,7 +21,7 @@ public class NormalApple extends Apple {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.CYAN);
         g.fillOval(this.getPx() * SnakePart.SIZE, this.getPy() * SnakePart.SIZE, this.getWidth(), this.getHeight());
     }
 }

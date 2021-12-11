@@ -7,19 +7,15 @@ import javax.swing.JPanel;
 public class Grid extends JPanel{
     public static final int rowCount = GameCourt.COURT_WIDTH / SnakePart.SIZE;
     public static final int colCount = GameCourt.COURT_HEIGHT / SnakePart.SIZE;
-    public static Cell[][] grid;
+    public static int[][] grid;
 
     public Grid() {
-        grid = new Cell[rowCount][colCount];
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < colCount; j++) {
-                grid[i][j] = Cell.EMPTY;
-            }
-        }
+        grid = new int[rowCount][colCount];
     }
 
-    public Cell[][] getGrid() {
-        return grid;
+    public int[][] getGrid() {
+        int[][] ans = grid;
+        return ans;
     }
 
     public static void draw(Graphics g) {

@@ -1,14 +1,17 @@
 package org.cis120.snake;
 
-public interface Apple {
+import java.awt.*;
 
-    public static final int SIZE = 20;
+public abstract class Apple extends GameObj{
 
+    public Apple(int px, int py) {
+        super (0, 0, px, py, SnakePart.SIZE, SnakePart.SIZE, GameCourt.COURT_WIDTH, GameCourt.COURT_HEIGHT);
+    }
 
-    public void effect(Snake snake);
+    public abstract void effect(Snake snake);
 
-    public boolean willVanish();
+    public abstract int duration();
 
-    public int duration();
+    public abstract void draw(Graphics g);
 
 }

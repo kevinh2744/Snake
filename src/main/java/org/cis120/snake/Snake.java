@@ -2,18 +2,49 @@ package org.cis120.snake;
 
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.Collections;
 
 public class Snake {
     private LinkedList<SnakePart> snakeList;
-    private boolean shouldDie;
+    private boolean ateBad;
+    private boolean atePower;
 
 
     public Snake() {
         snakeList = new LinkedList<SnakePart>();
         snakeList.add(new SnakePart(0, 0, Direction.RIGHT));
-        shouldDie = false;
+        ateBad = false;
+        atePower = false;
     }
 
+    public SnakePart getHead() {
+        return snakeList.getFirst();
+    }
+
+    public SnakePart getTail() {
+        return snakeList.getLast();
+    }
+
+    public LinkedList<SnakePart> getSnakeList() {
+        LinkedList<SnakePart> ans = snakeList;
+        return ans;
+    }
+
+    public boolean ateBad() {
+        return ateBad;
+    }
+
+    public void changeAteBad() {
+        ateBad = true;
+    }
+
+    public boolean atePower() {
+        return atePower;
+    }
+
+    public void changeAtePower() {
+        atePower = true;
+    }
     public void grow() {
         Direction lastDir = snakeList.getLast().getDir();
         int x = snakeList.getLast().getPx();
@@ -46,20 +77,20 @@ public class Snake {
         snakeList.removeLast();
     }
 
-    public SnakePart getHead() {
-        return snakeList.getFirst();
-    }
-
-    public LinkedList<SnakePart> getSnakeList() {
-        return snakeList;
-    }
-
-    public boolean isDead() {
-        return shouldDie;
-    }
-
-    public void ateBadApple() {
-        shouldDie = true;
+    public void reverse() {
+        for (SnakePart snakePart : snakeList) {
+            Direction dir = snakePart.getDir();
+            if (dir == Direction.UP) {
+                snakePart.setDir(Direction.DOWN);
+            } else if (dir == Direction.DOWN) {
+                snakePart.setDir(Direction.UP);
+            } else if (dir == Direction.RIGHT) {
+                snakePart.setDir(Direction.LEFT);
+            } else if (dir == Direction.LEFT) {
+                snakePart.setDir(Direction.RIGHT);
+            }
+        }
+        Collections.reverse(snakeList);
     }
 
     public void draw(Graphics g) {

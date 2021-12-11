@@ -14,7 +14,7 @@ import java.awt.*;
  * is displayed as a square of a specified color.
  */
 public class SnakePart extends GameObj {
-    public static final int SIZE = 20;
+    public static final int SIZE = 25;
     private Direction dir;
 
     /**
@@ -30,6 +30,10 @@ public class SnakePart extends GameObj {
 
     public Direction getDir() {
         return dir;
+    }
+
+    public void setDir(Direction newDir) {
+        dir = newDir;
     }
 
     @Override

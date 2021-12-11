@@ -2,21 +2,15 @@ package org.cis120.snake;
 
 import java.awt.*;
 
-public class BadApple extends GameObj implements Apple {
-    public static final int SIZE = 20;
+public class BadApple extends Apple {
 
     public BadApple(int px, int py) {
-        super(0, 0, px, py, SIZE, SIZE, GameCourt.COURT_WIDTH, GameCourt.COURT_HEIGHT);
+        super(px, py);
     }
 
     @Override
     public void effect(Snake snake) {
-        snake.ateBadApple();
-    }
-
-    @Override
-    public boolean willVanish() {
-        return true;
+        snake.changeAteBad();
     }
 
     @Override
@@ -26,7 +20,7 @@ public class BadApple extends GameObj implements Apple {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.red);
-        g.fillOval(this.getPx() * SIZE, this.getPy() * SIZE, this.getWidth(), this.getHeight());
+        g.setColor(Color.PINK);
+        g.fillOval(this.getPx() * SnakePart.SIZE, this.getPy() * SnakePart.SIZE, this.getWidth(), this.getHeight());
     }
 }

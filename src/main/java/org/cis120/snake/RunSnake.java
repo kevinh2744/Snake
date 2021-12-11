@@ -18,12 +18,25 @@ import java.awt.event.ActionListener;
  */
 public class RunSnake implements Runnable {
     public void run() {
+
+        JOptionPane.showMessageDialog(null,
+                " Welcome to my poorly made Snake game. Your objective is to eat apples, \n"
+                        + " which are represented by red dots. Each apple will increase the snake's \n"
+                        + " length by 1 and are worth 10 points.  Beware, pink apples are bad for \n"
+                        + " the snake's tummy and should be avoided all costs. You might encounter \n"
+                        + " some special apples later :^). If you collide with the wall or with \n"
+                        + " yourself, you will lose and give the snake a concussion. Try to survive \n"
+                        + " as long as you can. \n\n"
+                        + " Use your arrow keys to change the snake's direction. You cannot move in \n"
+                        + " the opposite direction (e.g. can't move left if you're going right)",
+                "Instructions", JOptionPane.INFORMATION_MESSAGE);
+
         // NOTE : recall that the 'final' keyword notes immutability even for
         // local variables.
 
         // Top-level frame in which game components live.
         // Be sure to change "TOP LEVEL FRAME" to the name of your game
-        final JFrame frame = new JFrame("TOP LEVEL FRAME");
+        final JFrame frame = new JFrame("Snake");
         frame.setLocation(300, 300);
 
         // Status panel

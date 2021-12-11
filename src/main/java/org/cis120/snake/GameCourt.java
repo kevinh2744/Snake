@@ -15,6 +15,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * GameCourt
@@ -26,13 +32,17 @@ import java.util.Random;
 @SuppressWarnings("serial")
 public class GameCourt extends JPanel {
 
-    public static Direction currentDir;
-    public static Grid grid;
-    private Cell[][] gridArr;
-
     // the state of the game logic
-    private Snake snake; // the Black Square, keyboard control
-    private Circle snitch; // the Golden Snitch, bounces
+    private Snake snake; // the moving snake, keyboard control
+    private Apple apple;
+    private BadApple badApple;
+
+    private int score;
+    public static Direction currentDir;
+    private Timer timer;
+
+    private Grid grid;
+    private int[][] gridArr;
 
     private boolean playing = false; // whether the game is running
     private JLabel status; // Current status text, i.e. "Running..."
@@ -42,11 +52,9 @@ public class GameCourt extends JPanel {
     public static final int COURT_HEIGHT = 400;
 
     // Update interval for timer, in milliseconds
-    public static final int INTERVAL = 100;
+    public static final int INTERVAL = 150;
 
     public GameCourt(JLabel status) {
-        grid = new Grid();
-        Cell[][] gridArr = grid.getGrid();
 
         // creates border around the court area, JComponent method
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -56,7 +64,7 @@ public class GameCourt extends JPanel {
         // actionPerformed() method is called each time the timer triggers. We
         // define a helper method called tick() that actually does everything
         // that should be done in a single timestep.
-        Timer timer = new Timer(INTERVAL, new ActionListener() {
+        timer = new Timer(INTERVAL, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 tick();
             }
@@ -70,6 +78,9 @@ public class GameCourt extends JPanel {
         // This key listener allows the square to move as long as an arrow key
         // is pressed, by changing the square's velocity accordingly. (The tick
         // method below actually moves the square.)
+
+        // Hitting the spacebar after the snake eats the power apple reverses
+        // the snake's direction
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT && currentDir != Direction.RIGHT) {
@@ -80,6 +91,19 @@ public class GameCourt extends JPanel {
                     currentDir = Direction.DOWN;
                 } else if (e.getKeyCode() == KeyEvent.VK_UP && currentDir != Direction.DOWN) {
                     currentDir = Direction.UP;
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE && snake.atePower()) {
+                    SnakePart tail = snake.getTail();
+                    Direction dir = tail.getDir();
+                    snake.reverse();
+                    if (dir == Direction.UP) {
+                        currentDir = Direction.DOWN;
+                    } else if (dir == Direction.DOWN) {
+                        currentDir = Direction.UP;
+                    } else if (dir == Direction.RIGHT) {
+                        currentDir = Direction.LEFT;
+                    } else if (dir == Direction.LEFT) {
+                        currentDir = Direction.RIGHT;
+                    }
                 }
             }
         });
@@ -93,10 +117,12 @@ public class GameCourt extends JPanel {
     public void reset() {
         snake = new Snake();
         currentDir = Direction.RIGHT;
-        snitch = new Circle(COURT_WIDTH, COURT_HEIGHT, Color.RED);
+        score = 0;
 
         playing = true;
-        status.setText("Running...");
+        status.setText("Score: " + score);
+
+        spawnApple();
 
         // Make sure that this component has the keyboard focus
         requestFocusInWindow();
@@ -108,13 +134,18 @@ public class GameCourt extends JPanel {
      */
     void tick() {
         if (playing) {
-            // advance the square and snitch in their current direction.
+            // advance the snake in the current direction.
             snake.move(currentDir);
 
-            // check for the game end conditions
-            if (snake.getHead().intersects(snitch)) {
-                snake.grow();
+            // Checking for and dealing with collisions with apples
+            if (snake.getHead().intersects(apple)) {
+                apple.effect(snake);
+                spawnApple();
+                score += 10;
+                status.setText("Score: " + score);
+                status.repaint();
             }
+            // check for the game end conditions
             checkLoss();
 
             // update the display
@@ -125,7 +156,7 @@ public class GameCourt extends JPanel {
     public void checkLoss() {
         boolean lost = false;
 
-        if (snake.isDead()) {
+        if (snake.ateBad()) {
             lost = true;
             playing = false;
             status.setText("You lose!");
@@ -135,7 +166,7 @@ public class GameCourt extends JPanel {
             lost = true;
             playing = false;
             status.setText("You lose!");
-        } else if (snake.getHead().getPx() > Grid.rowCount) {
+        } else if (snake.getHead().getPx() >= Grid.rowCount) {
             lost = true;
             playing = false;
             status.setText("You lose!");
@@ -143,7 +174,7 @@ public class GameCourt extends JPanel {
             lost = true;
             playing = false;
             status.setText("You lose!");
-        } else if (snake.getHead().getPy() > Grid.colCount) {
+        } else if (snake.getHead().getPy() >= Grid.colCount) {
             lost = true;
             playing = false;
             status.setText("You lose!");
@@ -158,18 +189,76 @@ public class GameCourt extends JPanel {
         }
     }
 
-    public void spawnNormalApple() {
+    public void spawnApple() {
+        int appleX;
+        int appleY;
+
+        grid = new Grid();
+        gridArr = grid.getGrid();
         for (SnakePart snakePart : snake.getSnakeList()) {
-            gridArr[snakePart.getPy()][snakePart.getPx()] = Cell.SNAKE_PART;
+            gridArr[snakePart.getPy()][snakePart.getPx()] = 1;
         }
 
+        Random random = new Random();
+        while (true) {
+            int randomRow = random.nextInt(Grid.rowCount);
+            int randomCol = random.nextInt(Grid.colCount);
+            if (gridArr[randomRow][randomCol] == 0) {
+                appleX = randomCol;
+                appleY = randomRow;
+                gridArr[randomRow][randomCol] = 1;
+                break;
+            }
+        }
+        if (score == 90) {
+            apple = new PowerApple(appleX, appleY);
+        } else {
+            apple = new NormalApple(appleX, appleY);
+        }
+    }
+
+    public void spawnBadApple() {
+        int badAppleX;
+        int badAppleY;
+
+        grid = new Grid();
+        gridArr = grid.getGrid();
+        for (SnakePart snakePart : snake.getSnakeList()) {
+            gridArr[snakePart.getPy()][snakePart.getPx()] = 1;
+        }
+
+        Random random = new Random();
+        while (true) {
+            int randomRow = random.nextInt(Grid.rowCount);
+            int randomCol = random.nextInt(Grid.colCount);
+            if (gridArr[randomRow][randomCol] == 0) {
+                badAppleX = randomCol;
+                badAppleY = randomRow;
+                gridArr[randomRow][randomCol] = 1;
+                break;
+            }
+        }
+        badApple = new BadApple(badAppleX, badAppleY);
+    }
+
+    //Testing methods
+    public void setDir(Direction dir) {
+        currentDir = dir;
+    }
+
+    public boolean getPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean bool) {
+        playing = bool;
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        apple.draw(g);
         snake.draw(g);
-        snitch.draw(g);
         Grid.draw(g);
         setBackground(Color.BLACK);
     }
