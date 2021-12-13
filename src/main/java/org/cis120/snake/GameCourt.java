@@ -209,8 +209,8 @@ public class GameCourt extends JPanel {
             // Checking for and dealing with collisions with apples
             if (snake.getHead().intersects(apple)) {
                 apple.effect(snake);
-                spawnApples();
                 score += 10;
+                spawnApples();
                 status.setText("Score: " + score);
                 status.repaint();
             }
@@ -287,7 +287,7 @@ public class GameCourt extends JPanel {
             }
         }
 
-        if (score == 90) {
+        if (score == 100) {
             apple = new PowerApple(appleX, appleY);
         } else {
             apple = new NormalApple(appleX, appleY);
